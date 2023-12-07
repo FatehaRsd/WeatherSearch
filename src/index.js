@@ -8,8 +8,8 @@ function displayWeather(response) {
   let humidityElement = document.querySelector("#humidity");
   let windSpeedElement = document.querySelector("#wind-speed");
   let iconElement = document.querySelector("#current-icon");
-  let highTempElement = document.querySelector("#high-temp");
-  let lowTempElement = document.querySelector("#low-temp");
+  //   let highTempElement = document.querySelector("#high-temp");
+  //   let lowTempElement = document.querySelector("#low-temp");
 
   temperatureElement.innerHTML = Math.round(temperature);
   cityElement.innerHTML = response.data.city;
@@ -18,7 +18,7 @@ function displayWeather(response) {
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" />`;
-  highTempElement.innerHTML = `${response.data.temperature.maximum}°C`;
+  //   highTempElement.innerHTML = `${response.data.temperature.maximum}°C`;
 }
 
 function formatDate(date) {
@@ -66,7 +66,7 @@ function formatDate(date) {
 
   let formattedDay = days[day];
   let formattedMonth = months[month];
-  return `${formattedDay}, ${dates}:${formattedMonth}:${year}, ${hours}:${minutes}`;
+  return `${formattedDay}, ${dates}/${formattedMonth}/${year}, ${hours}:${minutes}`;
 }
 
 function searchCity(city) {
