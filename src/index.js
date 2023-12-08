@@ -8,8 +8,6 @@ function displayWeather(response) {
   let humidityElement = document.querySelector("#humidity");
   let windSpeedElement = document.querySelector("#wind-speed");
   let iconElement = document.querySelector("#current-icon");
-  //   let highTempElement = document.querySelector("#high-temp");
-  //   let lowTempElement = document.querySelector("#low-temp");
 
   temperatureElement.innerHTML = Math.round(temperature);
   cityElement.innerHTML = response.data.city;
@@ -18,7 +16,7 @@ function displayWeather(response) {
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" />`;
-  //   highTempElement.innerHTML = `${response.data.temperature.maximum}°C`;
+  getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -34,27 +32,6 @@ function formatDate(date) {
     "Friday",
     "Saturday",
   ];
-  // let dates = date.getDate();
-  // let month = date.getMonth();
-  // let months = [
-  //   "Jan",
-  //   "Feb",
-  //   "Mar",
-  //   "Apr",
-  //   "May",
-  //   "June",
-  //   "Jul",
-  //   "Aug",
-  //   "Sept",
-  //   "Oct",
-  //   "Nov",
-  //   "Dec",
-  // ];
-  // // let year = date.getFullYear();
-
-  // // if (dates < 10) {
-  // //   dates = `0${dates}`;
-  // // }
 
   if (minutes < 10) {
     minutes = `0${minutes}`;
@@ -65,9 +42,8 @@ function formatDate(date) {
   }
 
   let formattedDay = days[day];
-  // let formattedMonth = months[month];
+
   return `${formattedDay}, ${hours}:${minutes}`;
-  // ${dates}/${formattedMonth}/${year},
 }
 
 function searchCity(city) {
@@ -84,11 +60,50 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
+function getForecast(city) {
+  let apiKey = "909ft9b4ed56801561bb3a80d18954oa";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function formatDay(time) {
+  let date = new Date(time * 1000);
+  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  return days[date.getDay()];
+}
+
+function displayForecast(response) {
+  let forecastHTML = "";
+
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="weather-forecast">
+          <div class="weather-forecast-daily" id="forecast-daily">
+              <span id="weather-forecast-day">${formatDay(day.time)}</span>
+              
+                <img src="${
+                  day.condition.icon_url
+                }" class="weather-forecast-icon" />
+              <div class="weather-forecast-temperature">
+                <span id="weather-forecast-temperature-max">
+                  <strong>${Math.round(day.temperature.maximum)}°</strong>
+                </span>
+                <span id="weather-forecast-temperature-min">${Math.round(
+                  day.temperature.minimum
+                )}°</span>
+              </div>
+            </div>
+           </div>`;
+    }
+  });
+  let forecast = document.querySelector("#forecast-daily");
+  forecast.innerHTML = forecastHTML;
+}
+
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
-// let currentDateELement = document.querySelector("#current-date");
-// let now = new Date();
-
-// currentDateELement.innerHTML = formatDate(now);
-searchCity("Paris");
+searchCity("Malaysia");
