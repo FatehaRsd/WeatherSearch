@@ -34,27 +34,27 @@ function formatDate(date) {
     "Friday",
     "Saturday",
   ];
-  let dates = date.getDate();
-  let month = date.getMonth();
-  let months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "June",
-    "Jul",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  let year = date.getFullYear();
+  // let dates = date.getDate();
+  // let month = date.getMonth();
+  // let months = [
+  //   "Jan",
+  //   "Feb",
+  //   "Mar",
+  //   "Apr",
+  //   "May",
+  //   "June",
+  //   "Jul",
+  //   "Aug",
+  //   "Sept",
+  //   "Oct",
+  //   "Nov",
+  //   "Dec",
+  // ];
+  // // let year = date.getFullYear();
 
-  if (dates < 10) {
-    dates = `0${dates}`;
-  }
+  // // if (dates < 10) {
+  // //   dates = `0${dates}`;
+  // // }
 
   if (minutes < 10) {
     minutes = `0${minutes}`;
@@ -65,8 +65,9 @@ function formatDate(date) {
   }
 
   let formattedDay = days[day];
-  let formattedMonth = months[month];
-  return `${formattedDay}, ${dates}/${formattedMonth}/${year}, ${hours}:${minutes}`;
+  // let formattedMonth = months[month];
+  return `${formattedDay}, ${hours}:${minutes}`;
+  // ${dates}/${formattedMonth}/${year},
 }
 
 function searchCity(city) {
